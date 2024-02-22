@@ -11,7 +11,7 @@ flow:
     commands:
       - type: console
         command: timeout 60 python3 /tmp/code.py
-        note: Python3 CPU utilization for 20 seconds
+        note: Python3 CPU utilization for 60 seconds
         log-stderr: True
         log-stdout: True
         ignore-errors: True
@@ -22,14 +22,14 @@ flow:
         command: gcc /tmp/cpu-utilization.c -o /tmp/a.out
         note: Compile
       - type: console
-        command: sleep 5
-        note: Sleep 5
+        command: sleep 60
+        note: Sleep 60
   - name: C
     container: ubuntu
     commands:
       - type: console
-        command: timeout 60 /tmp/a.out
-        note: C CPU utilization for 20 seconds
+        command: timeout 60 /tmp/a.out -i 10
+        note: C CPU utilization for 60 seconds
         log-stderr: True
         log-stdout: True
         ignore-errors: True
