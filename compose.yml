@@ -1,0 +1,7 @@
+---
+
+services:
+  ubuntu:
+    build: .
+    volumes:
+      - ./code.py:/tmp/code.py:ro

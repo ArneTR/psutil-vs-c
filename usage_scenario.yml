@@ -1,0 +1,26 @@
+---
+name: cpu utilization - psutil (python3) vs C
+author: Arne Tarara <arne@green-coding.io>
+description: Using psutil from python vs. native C. Overhead measurement
+
+compose-file: !include compose.yml
+
+flow:
+  - name: Stress
+    container: ubuntu
+    commands:
+      - type: console
+        command: timeout 5 python3 /tmp/code.py
+        note: Python3 CPU utilization for 20 seconds
+    commands:
+      - type: console
+        command: gcc /tmp/cpu-utilization.c
+        note: Compile
+    commands:
+      - type: console
+        command: sleep 5
+        note: Sleep 5
+    commands:
+      - type: console
+        command: timeout 5 /tmp/a.out
+        note: C CPU utilization for 20 seconds
