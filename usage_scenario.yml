@@ -6,21 +6,30 @@ description: Using psutil from python vs. native C. Overhead measurement
 compose-file: !include compose.yml
 
 flow:
-  - name: Stress
+  - name: Python3
     container: ubuntu
     commands:
       - type: console
-        command: timeout 5 python3 /tmp/code.py
+        command: timeout 60 python3 /tmp/code.py
         note: Python3 CPU utilization for 20 seconds
+        log-stderr: True
+        log-stdout: True
+        ignore-errors: True
+  - name: Sleep and build
+    container: ubuntu
     commands:
       - type: console
-        command: gcc /tmp/cpu-utilization.c
+        command: gcc /tmp/cpu-utilization.c -o /tmp/a.out
         note: Compile
-    commands:
       - type: console
         command: sleep 5
         note: Sleep 5
+  - name: C
+    container: ubuntu
     commands:
       - type: console
-        command: timeout 5 /tmp/a.out
+        command: timeout 60 /tmp/a.out
         note: C CPU utilization for 20 seconds
+        log-stderr: True
+        log-stdout: True
+        ignore-errors: True
